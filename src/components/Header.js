@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { toggleMenu } from "../utils/appSlice";
 
 const Header = () => {
@@ -11,7 +12,9 @@ dispatch(toggleMenu())
     <div className="grid grid-flow-col h-14 shadow-lg">
       <div className="flex col-span-1">
         <img src="./menu-burger.svg" alt="menu" className="m-4 h-6 cursor-pointer" onClick={() => handleMenu()} />
+
         <img src="./yt.svg" alt="menu" className="my-4 mx-2 h-5" />
+        
       </div>
       <div className="flex justify-center items-center col-span-10">
         <input

@@ -7,12 +7,14 @@ const chatSlice = createSlice({
     },
     //!TODO : Create a new slice
     //! Creating new comment with better comments
+    //plain comment
     reducers: {
-        addMsgs: (state,action) => {
-            
+        addMsg: (state,action) => {
+            state.messages.splice(20, 1)
+            state.messages.unshift(action.payload)
         }
     }
 })
 
-export const {addMsgs} = chatSlice.actions
+export const {addMsg} = chatSlice.actions
 export default chatSlice.reducer

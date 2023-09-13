@@ -22,7 +22,7 @@ const WatchPage = () => {
         <iframe
           width="860"
           height="500"
-          src={"https://www.youtube.com/embed/" + vId + "?autoplay=1"}
+          src={"https://www.youtube.com/embed/" + vId + "?autoplay=1&mute=1"}
           title="YouTube video player"
           frameBorder="0"
           allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

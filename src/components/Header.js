@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import { Link } from "react-router-dom";
 import { toggleMenu } from "../utils/appSlice";
-import { YOUTUBE_SEARCH_API } from "../utils/Constant";
+import { YOUTUBE_SEARCH_API, OPTIONS } from "../utils/Constant";
 import { cacheResults } from "../utils/searchSlice";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -28,12 +29,13 @@ const Header = () => {
   }, [searchQuery]);
 
   const getSuggestions = async () => {
-    const data = await fetch(YOUTUBE_SEARCH_API + searchQuery);
+    const data = await fetch(YOUTUBE_SEARCH_API + searchQuery + "&hl=en&gl=US",
+    OPTIONS );
     const json = await data.json();
-    setSuggestions(json[1]);
+    setSuggestions(json?.results);
     dispatch(
       cacheResults({
-        [searchQuery]: json[1],
+        [searchQuery]: json?.results,
       })
     );
   };
@@ -43,22 +45,23 @@ const Header = () => {
 
   return (
     <div className="grid grid-flow-col h-14 sticky">
-      <div className="flex col-span-1">
-        <img
+      <div className="flex col-span-2">
+      <img
           src="./menu-burger.svg"
           alt="menu"
-          className="m-4 h-6 cursor-pointer"
+          className="my-4 mx-2 h-6 cursor-pointer"
           onClick={() => handleMenu()}
         />
-
-        <img src="./yt.svg" alt="menu" className="my-4 mx-2 h-5" />
+      <Link to={"/"} className="">
+        <img src="./yt.svg" alt="menu" className="my-4 mx-2 h-6" />
+        </Link>
       </div>
-      <div className="px-10 my-auto col-span-10">
+      <div className="px-10 my-auto col-span-8">
         <div className="flex">
           <input
             type="text"
             placeholder="Search"
-            className="border border-r-2 rounded-l-3xl border-radius pl-3 my-auto h-10 w-2/3"
+            className="border border-r-1 border-gray z-10 rounded-l-3xl border-radius pl-3 my-auto h-10 w-2/3"
             onChange={(e) => setSearchQuery(e.target.value)}
             onFocus={() => setToggleSuggestions(true)}
             onBlur={() => setToggleSuggestions(false)}
@@ -75,7 +78,7 @@ const Header = () => {
         {toggleSuggestions && searchQuery !== "" && (
           <div className="absolute bg-white w-[35.5rem] py-2 px-5 rounded-lg border shadow-lg">
             <ul className="flex flex-col">
-              {suggestions.map((suggestion, index) => {
+              {suggestions?.map((suggestion, index) => {
                 return (
                   <li
                     key={index}
@@ -90,7 +93,7 @@ const Header = () => {
           </div>
         )}
       </div>
-      <div className="col-span-1 flex items-center">
+      <div className="col-span-2 flex items-center justify-end mr-4">
         <img src="./user.png" alt="user" className="my-2 h-7" />
       </div>
     </div>

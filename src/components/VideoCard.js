@@ -5,12 +5,12 @@ const VideoCard = ({ info }) => {
   const { channelTitle, title, thumbnails } = snippet;
   // console.log(thumbnails.medium)
   const viewCountDecimals = (vc) => {
-    if (vc.length <= 3) return vc / 1;
-    if (vc.length >= 4 && vc.length < 7)
+    if (vc?.length <= 3) return vc / 1;
+    if (vc?.length >= 4 && vc?.length < 7)
       return parseFloat(vc / 1000).toFixed(1) + "K";
-    if (vc.length >= 7 && vc.length <= 10)
+    if (vc?.length >= 7 && vc?.length <= 10)
       return parseFloat(vc / 1000000).toFixed(1) * 1 + "M";
-    if (vc.length > 10)
+    if (vc?.length > 10)
       return parseFloat(vc / 1000000).toFixed(1) * 1 + "B";
   };
   const trimTitle = (title) => {
@@ -26,7 +26,7 @@ const VideoCard = ({ info }) => {
         </li>
         <li className="py-1 text-xs">{channelTitle}</li>
         <li className="text-xs">
-          {viewCountDecimals(statistics.viewCount)} views
+          {statistics.viewCount && viewCountDecimals(statistics.viewCount) + " views"}
         </li>
       </ul>
     </div>
